@@ -1,12 +1,13 @@
-import './App.css';
-import { Button, Container } from '@mui/material'
+import './App.css'
+import { BrowserRouter } from 'react-router-dom'
+import { AppRouter } from './components/Router'
 
 function App() {
   return (
-    <Container maxWidth='xl'>
-      <Button variant='contained'>sup bro?</Button>
-    </Container>
-  );
+    <BrowserRouter>
+      <AppRouter />
+    </BrowserRouter>
+  )
 }
 
-export default App;
+export default App
