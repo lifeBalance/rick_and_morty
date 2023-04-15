@@ -1,4 +1,4 @@
-import { AppBar, Box, Button, Container, Grid, Stack, Toolbar, Typography } from '@mui/material'
+import { AppBar, Box, Button, Container, Grid, Stack, Toolbar } from '@mui/material'
 import React from 'react'
 
 export const NavBar: React.FC = () => {

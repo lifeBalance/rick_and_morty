@@ -11,9 +11,7 @@ export const AppRouter: React.FC = () => {
         <Route path='/' element={<Home />} />
       </Route>
 
-      <Route path='/login' element={<RouterLayout />}>
-        <Route path='/login' element={<Login />} />
-      </Route>
+      <Route path='/login' element={<Login />} />
 
       <Route path='/*' element={<div>404: Not Found</div>} />
     </Routes>
