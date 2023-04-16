@@ -1,4 +1,5 @@
 import { AppBar, Box, Button, Container, Grid, Stack, Toolbar } from '@mui/material'
+import { Link as RouterLink } from 'react-router-dom'
 import React from 'react'
 
 export const NavBar: React.FC = () => {
@@ -18,14 +19,15 @@ export const NavBar: React.FC = () => {
               alignItems='center'
             >
               <Grid item>
+                <RouterLink to='/' />
                 {/* <Typography>lol</Typography> */}
                 lol
               </Grid>
 
               <Grid item>
                 <Stack direction='row' spacing={2}>
-                  <Button variant='contained'>Login</Button>
-                  <Button variant='outlined'>Register</Button>
+                  <Button to='/login' component={RouterLink} variant='contained'>Login</Button>
+                  <Button to='/register' component={RouterLink} variant='outlined'>Register</Button>
                 </Stack>
               </Grid>
             </Grid>

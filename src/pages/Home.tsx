@@ -1,4 +1,5 @@
-import { Button, Container } from "@mui/material"
+import { Button, Container } from '@mui/material'
+import { Header } from '../components/Header'
 
 export const Home: React.FC = () => {
   return (
@@ -6,7 +7,11 @@ export const Home: React.FC = () => {
       maxWidth='xl'
       sx={{ mt: 9 }}
     >
-      <Button variant='contained'>Home page</Button>
+      <Header
+        title='sup bro'
+        description='this is a description'
+        element={<Button fullWidth variant='contained'>Home page</Button>}
+      />
     </Container>
   )
 }
