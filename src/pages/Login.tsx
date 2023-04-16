@@ -8,11 +8,16 @@ import {
   Typography,
 } from '@mui/material'
 import { ChangeEvent, FormEvent, useState } from 'react'
+import { useNotification } from '../context/NotificationCtx'
+import { loginFormSchema } from '../utils/validateForm'
+import { z } from 'zod'
 
 type Credentials = {
   email: string
   password: string
 }
+
+type CredentialsType = z.infer<typeof loginFormSchema>
 
 const initialState: Credentials = {
   email: '',
@@ -21,6 +26,7 @@ const initialState: Credentials = {
 
 export const Login: React.FC = () => {
   const [credentials, setCredentials] = useState<Credentials>(initialState)
+  const { getError, getSuccess } = useNotification()
 
   function handleInput(e: ChangeEvent<HTMLInputElement>) {
     // console.log(e.target.value, e.target.name)
@@ -29,9 +35,23 @@ export const Login: React.FC = () => {
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    console.log(credentials)
-    setCredentials(initialState)
-    // compare with local storage maybe?
+    try {
+      // validate data entered by the user
+      loginFormSchema.parse(credentials)
+
+      // Clear form if no validation errors
+      setCredentials(initialState)
+      // console.log(credentials)
+      // compare credential with data in local storage maybe? (set during sign up)
+      // getSuccess(JSON.stringify(credentials))
+      // redirect to main page
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        // Show a toast if there were validation errors
+        getError(error.issues[0].message)
+        // console.log(error.issues[0].message)
+      }
+    }
   }
 
   return (
