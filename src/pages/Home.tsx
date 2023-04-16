@@ -1,6 +1,13 @@
-import { Button, Container, Grid } from '@mui/material'
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Container,
+  Grid,
+  Pagination,
+} from '@mui/material'
 import { Header } from '../components/Header'
-import { useEffect, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { characters } from '../api/character'
 import { CharacterCard } from '../components/Card'
 
@@ -21,14 +28,24 @@ type Character = {
 
 export const Home: React.FC = () => {
   const [characterList, setCharacterList] = useState<Character[] | null>(null)
+  const [loading, setLoading] = useState<boolean>(false)
+  const [page, setPage] = useState<number>(1)
+  const [pageTotal, setPageTotal] = useState<number | undefined>()
+
+  function handlePageChange(e: ChangeEvent<unknown>, value: number) {
+    setPage(value)
+  }
 
   useEffect(() => {
     ;(async function () {
-      const { data } = await characters.getAll(1)
+      setLoading(true)
+      const { data } = await characters.getAll(page)
+      // console.log(data)
+      setPageTotal(data.info.pages)
       setCharacterList(data.results)
-      console.log(data.results)
+      setTimeout(() => setLoading(false), 500) // to be able to see spinner
     })()
-  }, [])
+  }, [page])
 
   return (
     <Container
@@ -47,10 +64,22 @@ export const Home: React.FC = () => {
           </Button>
         }
       />
-      {characterList && characterList?.length > 0 ? (
-        <Grid container spacing={2} direction='row'>
+      {loading ? (
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+          <CircularProgress />
+        </Box>
+      ) : characterList && characterList?.length > 0 ? (
+        <Grid
+          container
+          spacing={2}
+          direction='row'
+          my={2}
+        >
           {characterList.map((c) => (
-            <Grid item xs={3}>
+            <Grid
+              item
+              xs={3}
+            >
               <CharacterCard
                 fullName={c.name}
                 image={c.image}
@@ -60,9 +89,22 @@ export const Home: React.FC = () => {
               />
             </Grid>
           ))}
+          <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', mt: 4 }}>
+            <Pagination
+              count={pageTotal}
+              page={page}
+              onChange={handlePageChange}
+              variant='outlined'
+              color='primary'
+              size='large'
+              sx={{marginBottom: 2}}
+            />
+          </Box>
         </Grid>
       ) : (
-        <div>No data available</div>
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+          <div>No data available</div>
+        </Box>
       )}
     </Container>
   )
