@@ -2,10 +2,11 @@ import { Button, Container } from "@mui/material"
 import { useNotification } from "../context/NotificationCtx"
 
 export const Home: React.FC = () => {
-  const { getError } = useNotification()
+  const { getError, getSuccess } = useNotification()
 
   const handleClick = () => {
-    getError('lalala')
+    // getError('lalala')
+    getSuccess('lalala')
   }
 
   return (

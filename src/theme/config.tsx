@@ -7,6 +7,8 @@ enum ThemeOptions {
   FONT_GLOBAL = "'JetBrains Mono', monospace",
   ERROR_MAIN = '#F44336',
   BG_ERROR_MAIN = 'rgba(59,15,15, 0.3)',
+  SUCCESS_MAIN = '#C8FA5F',
+  BG_SUCCESS_MAIN = 'rgba(135,175,71, 0.3)',
 }
 
 const theme = createTheme({
@@ -43,6 +45,10 @@ const theme = createTheme({
         standardError: {
           border: `1px solid ${ThemeOptions.ERROR_MAIN}`,
           background: ThemeOptions.BG_ERROR_MAIN
+        },
+        standardSuccess: {
+          border: `1px solid ${ThemeOptions.SUCCESS_MAIN}`,
+          background: ThemeOptions.BG_SUCCESS_MAIN
         }
       }
     }
