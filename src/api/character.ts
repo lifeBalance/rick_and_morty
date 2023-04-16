@@ -7,4 +7,5 @@ export const characters = {
         page: page,
       },
     }),
+  getById: (id: string | undefined) => instance.get(`/character/${id}`),
 }
