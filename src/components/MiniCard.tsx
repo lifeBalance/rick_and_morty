@@ -8,8 +8,10 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
+import {Link as RouterLink} from 'react-router-dom'
 
 type CardProps = {
+  id: number,
   image: string,
   fullName: string,
   species: string,
@@ -17,7 +19,7 @@ type CardProps = {
   livingStatus: string,
 }
 
-export const CharacterCard: React.FC<CardProps> = ({image, fullName, species, gender, livingStatus}) => {
+export const CharacterCard: React.FC<CardProps> = ({id, image, fullName, species, gender, livingStatus}) => {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
@@ -36,7 +38,7 @@ export const CharacterCard: React.FC<CardProps> = ({image, fullName, species, ge
         </Stack>
       </CardContent>
       <CardActions>
-        <Button variant='contained' size='small' fullWidth>clicketty click</Button>
+        <Button to={`/character/${id}`} component={RouterLink} variant='contained' size='small' fullWidth>clicketty click</Button>
       </CardActions>
     </Card>
   )

@@ -3,9 +3,7 @@ import { useParams } from 'react-router-dom'
 import { characters } from '../api/character'
 import {
   Box,
-  Button,
   Card,
-  CardActions,
   CardContent,
   CardMedia,
   CircularProgress,
@@ -14,6 +12,12 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
+
+// Accordion
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 type Character = {
   created: string
@@ -33,8 +37,13 @@ type Character = {
 export const Character: React.FC = () => {
   const { id } = useParams()
   const [loading, setLoading] = useState<boolean>(true)
+  const [expanded, setExpanded] = useState<string | false>(false)
   const [character, setCharacter] = useState<Character | null>(null)
-  console.log('yoyo', id)
+
+  const handleChange =
+  (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+    setExpanded(isExpanded ? panel : false);
+  };
 
   useEffect(() => {
     ;(async function (id: string | undefined) {
@@ -50,6 +59,7 @@ export const Character: React.FC = () => {
       }
     })(id)
   }, [])
+
   return (
     <Container maxWidth='md'>
       {loading ? (
@@ -69,22 +79,36 @@ export const Character: React.FC = () => {
             <Divider sx={{ marginY: 2 }} />
             <Stack
               direction='column'
-              gap={2}
             >
-              <Typography>Species: {character!.species}</Typography>
-              <Typography>Gender: {character!.gender}</Typography>
-              <Typography>Status: {character!.status}</Typography>
+              <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')} disableGutters>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography
+                    color={`${expanded === 'panel1' ? 'primary.main' : 'white'}`} >
+                    General Information
+                  </Typography>
+                </AccordionSummary>
+
+                <AccordionDetails>
+                  <Typography>Species: {character!.species}</Typography>
+                  <Typography>Gender: {character!.gender}</Typography>
+                  <Typography>Status: {character!.status}</Typography>
+                  <Typography>Location: {character!.location!.name}</Typography>
+                </AccordionDetails>
+              </Accordion>
+
+              <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')} disableGutters>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography color={`${expanded === 'panel2' ? 'primary.main' : 'white'}`} >
+                    Episodes
+                  </Typography>
+                </AccordionSummary>
+
+                <AccordionDetails>
+                  {character!.episode.length > 0 && character!.episode.map(e => <Typography>{e}</Typography>)}
+                </AccordionDetails>
+              </Accordion>
             </Stack>
           </CardContent>
-          <CardActions>
-            <Button
-              variant='contained'
-              size='small'
-              fullWidth
-            >
-              clicketty click
-            </Button>
-          </CardActions>
         </Card>
       )}
     </Container>

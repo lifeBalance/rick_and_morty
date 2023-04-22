@@ -9,7 +9,7 @@ import {
 import { Header } from '../components/Header'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { characters } from '../api/character'
-import { CharacterCard } from '../components/Card'
+import { CharacterCard } from '../components/MiniCard'
 
 type Character = {
   created: Date
@@ -79,8 +79,10 @@ export const Home: React.FC = () => {
             <Grid
               item
               xs={3}
+              key={c.id}
             >
               <CharacterCard
+                id={c.id}
                 fullName={c.name}
                 image={c.image}
                 gender={c.gender}
