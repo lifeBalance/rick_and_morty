@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   CircularProgress,
   Container,
   Grid,
@@ -10,6 +9,7 @@ import { Header } from '../components/Header'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { characters } from '../api/character'
 import { CharacterCard } from '../components/MiniCard'
+import { useLoginStore } from '../store/store'
 
 type Character = {
   created: Date
@@ -31,13 +31,16 @@ export const Home: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [page, setPage] = useState<number>(1)
   const [pageTotal, setPageTotal] = useState<number | undefined>()
+  const isLoggedIn = useLoginStore(state => state.isLoggedIn)
 
   function handlePageChange(e: ChangeEvent<unknown>, value: number) {
     setPage(value)
   }
 
   useEffect(() => {
-    ;(async function () {
+    if (!isLoggedIn) return
+
+    (async function () {
       setLoading(true)
       const { data } = await characters.getAll(page)
       setPageTotal(data.info.pages)
@@ -51,12 +54,14 @@ export const Home: React.FC = () => {
       maxWidth='xl'
       sx={{ mt: 9 }}
     >
-      <Header />
-      {loading ? (
+      {!isLoggedIn && 
+        <Header />}
+
+      {isLoggedIn && loading ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
           <CircularProgress />
         </Box>
-      ) : characterList && characterList?.length > 0 ? (
+      ) : isLoggedIn && characterList && characterList?.length > 0 ? (
         <Grid
           container
           spacing={2}
@@ -92,6 +97,7 @@ export const Home: React.FC = () => {
           </Box>
         </Grid>
       ) : (
+        isLoggedIn &&
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
           <div>No data available</div>
         </Box>

@@ -11,6 +11,8 @@ import { ChangeEvent, FormEvent, useState } from 'react'
 import { useNotification } from '../context/NotificationCtx'
 import { loginFormSchema } from '../utils/validateForm'
 import { z } from 'zod'
+import { useNavigate } from 'react-router-dom'
+import { useLoginStore } from '../store/store'
 
 type Credentials = {
   email: string
@@ -21,12 +23,14 @@ type CredentialsType = z.infer<typeof loginFormSchema>
 
 const initialState: Credentials = {
   email: '',
-  password: ''
+  password: '',
 }
 
 export const Login: React.FC = () => {
   const [credentials, setCredentials] = useState<Credentials>(initialState)
   const { getError, getSuccess } = useNotification()
+  const navigate = useNavigate()
+  const login = useLoginStore(state => state.login)
 
   function handleInput(e: ChangeEvent<HTMLInputElement>) {
     // console.log(e.target.value, e.target.name)
@@ -39,12 +43,25 @@ export const Login: React.FC = () => {
       // validate data entered by the user
       loginFormSchema.parse(credentials)
 
-      // Clear form if no validation errors
-      setCredentials(initialState)
-      // console.log(credentials)
-      // compare credential with data in local storage maybe? (set during sign up)
-      // getSuccess(JSON.stringify(credentials))
-      // redirect to main page
+      // Clear form if no validation errors 🤔 (no point if I'm redirecting)
+      // setCredentials(initialState)
+
+      // Get credentials stored in Sessiong storage during Registration.
+      const [registeredEmail, registeredPassword] = sessionStorage.getItem('Rick_and_Morty')?.split(':') || []
+
+      if (registeredEmail === credentials.email && registeredPassword === credentials.password) {
+        // Set global state
+        login()
+
+        // Show a toasty
+        getSuccess('Welcome back little Bitch!')
+
+        // redirect to main page
+        navigate('/')
+      } else {
+        getError('Wrong Credentials')
+        navigate('/')
+      }
     } catch (error) {
       if (error instanceof z.ZodError) {
         // Show a toast if there were validation errors
@@ -72,7 +89,7 @@ export const Login: React.FC = () => {
           >
             <Box
               component='form'
-              onSubmit={handleSubmit}    
+              onSubmit={handleSubmit}
               sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}
             >
               <Typography variant='h4'>Login</Typography>

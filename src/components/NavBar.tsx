@@ -1,9 +1,20 @@
-import { AppBar, Box, Button, Container, Grid, Stack, Toolbar } from '@mui/material'
+import {
+  AppBar,
+  Box,
+  Button,
+  Container,
+  Grid,
+  Stack,
+  Toolbar,
+} from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
-import React from 'react'
 import logo from '../logo.png'
+import { useLoginStore } from '../store/store'
 
 export const NavBar: React.FC = () => {
+  const isLoggedIn = useLoginStore.getState().isLoggedIn
+  const logout = useLoginStore(state => state.logout)
+
   return (
     <Box
       sx={{
@@ -21,14 +32,44 @@ export const NavBar: React.FC = () => {
             >
               <Grid item>
                 <RouterLink to='/'>
-                  <img src={logo} height={60}/>
+                  <img
+                    src={logo}
+                    height={60}
+                  />
                 </RouterLink>
               </Grid>
 
               <Grid item>
-                <Stack direction='row' spacing={2}>
-                  <Button to='/login' component={RouterLink} variant='contained'>Login</Button>
-                  <Button to='/register' component={RouterLink} variant='outlined'>Register</Button>
+                <Stack
+                  direction='row'
+                  spacing={2}
+                >
+                  {!isLoggedIn ? (
+                    <>
+                      <Button
+                        to='/login'
+                        component={RouterLink}
+                        variant='contained'
+                      >
+                        Login
+                      </Button>
+                      <Button
+                        to='/register'
+                        component={RouterLink}
+                        variant='outlined'
+                      >
+                        Register
+                      </Button>
+                    </>
+                  ) : (
+                    <Button
+                      onClick={logout}
+                      variant='outlined'
+                      color='error'
+                    >
+                      Log out
+                    </Button>
+                  )}
                 </Stack>
               </Grid>
             </Grid>
