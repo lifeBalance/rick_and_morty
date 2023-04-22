@@ -1,13 +1,7 @@
-import { Box, Divider, Grid, Typography } from '@mui/material'
-import { PropsWithChildren, ReactNode, useEffect, useState } from 'react'
+import { Box, Divider, Grid } from '@mui/material'
+import { useEffect, useState } from 'react'
 import logo from '../logo.png'
 import axios from 'axios'
-
-// type HeaderProps = {
-//   title: string
-//   description: string
-//   element?: ReactNode | null
-// }
 
 const url = 'http://loremricksum.com/api/?paragraphs=1&quotes=1'
 
@@ -23,6 +17,7 @@ export const Header: React.FC = () => {
       setQuote(data.data[0])
     })()
   }, [])
+
   return (
     <>
       <Box

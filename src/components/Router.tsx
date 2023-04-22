@@ -4,6 +4,7 @@ import { RouterLayout } from './RouterLayout'
 import { Home } from '../pages/Home'
 import { Login } from '../pages/Login'
 import { Character } from '../pages/Character'
+import { Register } from '../pages/Register'
 
 export const AppRouter: React.FC = () => {
   return (
@@ -14,6 +15,7 @@ export const AppRouter: React.FC = () => {
       </Route>
 
       <Route path='/login' element={<Login />} />
+      <Route path='/register' element={<Register />} />
 
       <Route path='/*' element={<div>404: Not Found</div>} />
     </Routes>
