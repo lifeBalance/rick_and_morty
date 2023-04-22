@@ -12,7 +12,7 @@ import logo from '../logo.png'
 import { useLoginStore } from '../store/store'
 
 export const NavBar: React.FC = () => {
-  const isLoggedIn = useLoginStore.getState().isLoggedIn
+  const isLoggedIn = useLoginStore(state => state.isLoggedIn)
   const logout = useLoginStore(state => state.logout)
 
   return (
