@@ -1,6 +1,7 @@
 import { AppBar, Box, Button, Container, Grid, Stack, Toolbar } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
 import React from 'react'
+import logo from '../logo.png'
 
 export const NavBar: React.FC = () => {
   return (
@@ -19,9 +20,9 @@ export const NavBar: React.FC = () => {
               alignItems='center'
             >
               <Grid item>
-                <RouterLink to='/' />
-                {/* <Typography>lol</Typography> */}
-                lol
+                <RouterLink to='/'>
+                  <img src={logo} height={60}/>
+                </RouterLink>
               </Grid>
 
               <Grid item>

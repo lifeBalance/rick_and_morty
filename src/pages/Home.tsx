@@ -40,7 +40,6 @@ export const Home: React.FC = () => {
     ;(async function () {
       setLoading(true)
       const { data } = await characters.getAll(page)
-      // console.log(data)
       setPageTotal(data.info.pages)
       setCharacterList(data.results)
       setTimeout(() => setLoading(false), 500) // to be able to see spinner
@@ -52,18 +51,7 @@ export const Home: React.FC = () => {
       maxWidth='xl'
       sx={{ mt: 9 }}
     >
-      <Header
-        title='sup bro'
-        description='this is a description'
-        element={
-          <Button
-            fullWidth
-            variant='contained'
-          >
-            Home page
-          </Button>
-        }
-      />
+      <Header />
       {loading ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
           <CircularProgress />

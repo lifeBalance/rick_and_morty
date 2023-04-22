@@ -1,17 +1,28 @@
 import { Box, Divider, Grid, Typography } from '@mui/material'
-import { PropsWithChildren, ReactNode } from 'react'
+import { PropsWithChildren, ReactNode, useEffect, useState } from 'react'
+import logo from '../logo.png'
+import axios from 'axios'
 
-type HeaderProps = {
-  title: string
-  description: string
-  element?: ReactNode | null
-}
+// type HeaderProps = {
+//   title: string
+//   description: string
+//   element?: ReactNode | null
+// }
 
-export const Header: React.FC<PropsWithChildren<HeaderProps>> = ({
-  title,
-  description,
-  element,
-}) => {
+const url = 'http://loremricksum.com/api/?paragraphs=1&quotes=1'
+
+export const Header: React.FC = () => {
+  const [quote, setQuote] = useState('')
+  const [loading, setLoading] = useState<boolean>(true)
+
+  useEffect(() => {
+    ;(async function () {
+      setLoading(true)
+      const { data } = await axios.get(url)
+      console.log(data.data);
+      setQuote(data.data[0])
+    })()
+  }, [])
   return (
     <>
       <Box
@@ -43,24 +54,15 @@ export const Header: React.FC<PropsWithChildren<HeaderProps>> = ({
               }}
             >
               <Grid item>
-                <Typography variant='h1'>{title}</Typography>
+                <img src={logo} height={200}/>
               </Grid>
 
               <Grid
                 item
                 sx={{ mt: 2 }}
               >
-                {description}
+                {quote}
               </Grid>
-
-              {element && (
-                <Grid
-                  item
-                  sx={{ mt: 4, width: '100%' }}
-                >
-                  {element}
-                </Grid>
-              )}
             </Grid>
           </Grid>
         </Grid>
