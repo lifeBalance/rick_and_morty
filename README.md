@@ -1,46 +1,49 @@
-# Getting Started with Create React App
+# Rick & Morty API frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A simple practice project to get familiar with TypeScript and MUI.
 
-## Available Scripts
+> This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-In the project directory, you can run:
+## Deploying to GitHub Pages
 
-### `npm start`
+To publish a React build to GitHub Pages, you can follow these steps:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. Install the gh-pages package by running the following command in your terminal:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```
+npm install gh-pages --save-dev
+```
 
-### `npm test`
+In your ``package.json`` file, add the following lines to the ``"scripts"`` section:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+"predeploy": "npm run build",
+"deploy": "gh-pages -d build"
+```
 
-### `npm run build`
+At the root level of your add:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+"homepage": ""homepage": "https://myusername.github.io/myreponame",
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Now it's time to **commit** and **push** the changes.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## Deploying to GitHub Pages
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+To build your React app
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+npm run predeploy
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+That will build your application, spitting out the ``build`` folder
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+To deploy it to GitHub Pages, run the following command in your terminal:
 
-## Learn More
+```
+npm run deploy
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+That pushes the ``build`` folder to the ``gh-pages`` branch in your GitHub repository. After a few minutes, your React app should be live on GitHub Pages at [https://<username>.github.io/<repository-name>/](https://lifebalance.github.io/rick_and_morty/).
