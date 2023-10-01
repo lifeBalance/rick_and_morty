@@ -46,7 +46,9 @@ To deploy it to GitHub Pages, run the following command in your terminal:
 npm run deploy
 ```
 
-That pushes the ``build`` folder to the ``gh-pages`` branch in your GitHub repository. After a few minutes, your React app should be live on GitHub Pages at [https://<username>.github.io/<repository-name>/](https://lifebalance.github.io/rick_and_morty/).
+That pushes the ``build`` folder to the ``gh-pages`` branch in your GitHub repository. After a few minutes, your React app should be live on GitHub Pages at [https://<username>.github.io/<repository-name>/#/](https://lifebalance.github.io/rick_and_morty/#/).
+
+> Due to front-end routing issues (read below), the hashtag at the end of the URL above is important, bro.
 
 ## Issues
 If after deploying your page, all you get is a **404** error, that may be due to client side routing ([read here](https://create-react-app.dev/docs/deployment/#notes-on-client-side-routing)). What I did was to make use of the [HashRouter](https://reactrouter.com/en/main/router-components/hash-router).
